@@ -1,5 +1,5 @@
 NAME		= so_long
-CC			= cc -g
+CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -Imlx_linux -O3 -DESC=65307 -DW=119 -DS=115 -DA=97 -DD=100 -DRIGHT=65363 -DLEFT=65361
 MLXFLAG		= -Imlx_linux -lXext -lX11 -lm -lz
 SRC			=	src/access.c			\
@@ -22,7 +22,7 @@ $(NAME):	$(MLX) $(LIBFT) $(FT_PRINTF) $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT) $(FT_PRINTF) $(MLX) $(MLXFLAG)
 
 $(OBJ_DIR)/%.o:	%.c
-	mkdir -p $(@D)
+	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):

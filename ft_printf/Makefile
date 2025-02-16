@@ -5,13 +5,19 @@ CFLAGS = -Wall -Werror -Wextra
 SRC = ft_printf.c \
 		ft_func.c
 
-OBJ = $(SRC:.c=.o)
+OBJ_DIR = ../obj/ft_printf
+
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 all : $(NAME)
 
 $(NAME): $(OBJ)
-	@ar rcs $(NAME) $?
+	@ar rcs $(NAME) $(OBJ)
 
+$(OBJ_DIR)/%.o : %.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	
 clean:
 	@rm -f $(OBJ)
 

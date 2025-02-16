@@ -48,16 +48,23 @@ ft_strlcat.c	\
 ft_striteri.c	\
 ft_strmapi.c
 
-OBJ = $(SRC:.c=.o)
+OBJ_DIR =	../obj/libft
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	@ar rcs $(NAME) $(OBJ)
+
+$(OBJ_DIR)/%.o : %.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 fclean:	clean
-	rm -f $(NAME)
-re:	fclean $(NAME)
+	@rm -f $(NAME)
+
+re:	fclean all
 
 .PHONY:	all clean fclean re
