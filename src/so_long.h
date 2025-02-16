@@ -13,7 +13,7 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# define PIXEL 100
+# define PIXEL 48
 # ifndef ESC
 #  define ESC 53
 #  define W 13
