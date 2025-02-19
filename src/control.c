@@ -59,13 +59,13 @@ int	map_check_nl(char **map)
 	int	i;
 	int	j;
 
-	i = 1;
-	j = 0;
-	while (map[0][j] && map[0][j] != '\n')
-		j++;
-	while (map[i] != NULL)
+	i = 0;
+	while (map[i])
 	{
-		if (map[i - 1][j] == '\n' && map[i][0] == '\n')
+		j = 0;
+		while (map[i][j] && map[i][j] != '\n')
+			j++;
+		if (map[i][j] && map[i + 1] && map[i + 1][0] == '\n')
 			return (1);
 		i++;
 	}
@@ -78,11 +78,11 @@ char	**delete_nl(char **map)
 	int	j;
 
 	i = 0;
-	j = 0;
-	while (map[0][j] != '\n')
-		j++;
 	while (map[i])
 	{
+		j = 0;
+		while (map[i][j] && map[i][j] != '\n')
+			j++;
 		if (map[i][j] == '\n')
 			map[i][j] = '\0';
 		i++;

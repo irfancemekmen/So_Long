@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../ft_printf/ft_printf.h"
-#include "../libft/libft.h"
 #include "../minilibx/mlx.h"
 #include "so_long.h"
 
@@ -21,6 +20,8 @@ void	init_mlx(t_data *data)
 	int	y;
 
 	data->mlx = mlx_init();
+	if (!data->mlx)
+		mlx_exit(data, "Error\nTextures not loaded!");
 	data->window = mlx_new_window(data->mlx, data->map->map_w * PIXEL,
 			data->map->map_h * PIXEL, "so_long");
 	data->player = mlx_xpm_file_to_image(data->mlx, "textures/player.xpm", &y,
@@ -30,8 +31,8 @@ void	init_mlx(t_data *data)
 	data->wall = mlx_xpm_file_to_image(data->mlx, "textures/wall.xpm", &y, &x);
 	data->bground = mlx_xpm_file_to_image(data->mlx, "textures/bground.xpm", &y,
 			&x);
-	if (!data->mlx || !data->window || !data->player || !data->coin
-		|| !data->exit || !data->wall || !data->bground)
+	if (!data->window || !data->player || !data->coin || !data->exit
+		|| !data->wall || !data->bground)
 		mlx_exit(data, "Error\nTextures not loaded!");
 }
 
@@ -64,15 +65,15 @@ void	render(t_data *data)
 
 int	keyboard(int keycode, t_data *data)
 {
-	if (keycode == ESC)
+	if (keycode == 65307)
 		mlx_exit(data, "Exit");
-	else if (keycode == W && data->map->map[data->ph - 1][data->pw] != '1')
+	else if (keycode == 119 && data->map->map[data->ph - 1][data->pw] != '1')
 		data->ph--;
-	else if (keycode == A && data->map->map[data->ph][data->pw - 1] != '1')
+	else if (keycode == 97 && data->map->map[data->ph][data->pw - 1] != '1')
 		data->pw--;
-	else if (keycode == S && data->map->map[data->ph + 1][data->pw] != '1')
+	else if (keycode == 115 && data->map->map[data->ph + 1][data->pw] != '1')
 		data->ph++;
-	else if (keycode == D && data->map->map[data->ph][data->pw + 1] != '1')
+	else if (keycode == 100 && data->map->map[data->ph][data->pw + 1] != '1')
 		data->pw++;
 	else
 		return (0);

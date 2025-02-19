@@ -29,8 +29,8 @@ t_data	*data_init(char *map)
 		free(data);
 		error_message("Error\nMalloc error");
 	}
-	height = full_map(map);
-	data->map->map = map_build(map, height);
+	height = map_height(map);
+	data->map->map = map_build(map, height, data);
 	if (!data->map->map)
 		free_exit("Error\nMap not created", data, 0);
 	data->cc = av_counter(data->map->map, 'C');
@@ -54,7 +54,6 @@ int	main(int ac, char **av)
 	data = data_init(av[1]);
 	virtual_map(data, 0, 0);
 	init_mlx(data);
-	render(data);
 	mlx_key_hook(data->window, keyboard, data);
 	mlx_hook(data->window, 17, 0, close_window, data);
 	mlx_loop_hook(data->mlx, put_mlx, data);

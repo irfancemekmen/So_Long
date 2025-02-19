@@ -10,13 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
 #include "so_long.h"
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-int	full_map(char *map)
+int	map_height(char *map)
 {
 	int		fd;
 	int		i;
@@ -40,17 +39,22 @@ int	full_map(char *map)
 	return (height);
 }
 
-static int	map_creat_check(char **tmp)
+static void	map_creat_check(char **tmp, t_data *data)
 {
 	if (map_check_nl(tmp))
-		return (0);
+	{
+		free_map((void **)tmp);
+		free_exit("Error!", data, 0);
+	}
 	tmp = delete_nl(tmp);
 	if (map_checker(tmp) == 0)
-		return (0);
-	return (1);
+	{
+		free_map((void **)tmp);
+		free_exit("Error!\nMap not okay!", data, 0);
+	}
 }
 
-char	**map_build(char *map, int height)
+char	**map_build(char *map, int height, t_data *data)
 {
 	char	**tmp;
 	char	*line;
@@ -60,7 +64,7 @@ char	**map_build(char *map, int height)
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
-	tmp = (char **)malloc(sizeof(char *) * (height + 1));
+	tmp = (char **)malloc(sizeof(char *) * (height + 2));
 	if (!tmp)
 		return (close(fd), NULL);
 	i = 0;
@@ -72,7 +76,6 @@ char	**map_build(char *map, int height)
 	}
 	tmp[i] = NULL;
 	close(fd);
-	if (map_creat_check(tmp) == 0)
-		return (NULL);
+	map_creat_check(tmp, data);
 	return (tmp);
 }

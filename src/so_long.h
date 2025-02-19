@@ -14,13 +14,6 @@
 # define SO_LONG_H
 
 # define PIXEL 48
-# ifndef ESC
-#  define ESC 53
-#  define W 13
-#  define A 0
-#  define S 1
-#  define D 2
-# endif
 
 typedef struct s_map
 {
@@ -70,8 +63,8 @@ void		render(t_data *data);
 int			keyboard(int keycode, t_data *data);
 int			put_mlx(t_data *data);
 
-int			full_map(char *map);
-char		**map_build(char *map, int height);
+int			map_height(char *map);
+char		**map_build(char *map, int height, t_data *data);
 
 void		map_w_h(t_data *data);
 void		player_w_h(t_data *data);
